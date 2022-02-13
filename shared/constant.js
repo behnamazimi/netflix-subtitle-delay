@@ -7,6 +7,6 @@ const globalActions = {
   OPTIONS_UPDATE: "OPTIONS_UPDATE",
 }
 
-let defaultDelay = .5
+let defaultDelay = 0
 
 let defaultSelector = ".player-timedtext"
