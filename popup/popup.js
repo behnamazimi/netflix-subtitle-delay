@@ -26,7 +26,7 @@ saveBtn.onclick = function () {
 }
 
 function initPopup() {
-  sendGlobalMessage({action: globalActions.POPUP_INIT}, ({options}) => {
+  sendGlobalMessage({action: globalActions.POPUP_INIT}, ({options = {}}) => {
     delayInput.value = options.delay || defaultDelay
     selectorInput.value = options.elementSelector || defaultSelector
   });
