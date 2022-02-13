@@ -9,21 +9,12 @@ const messagingUtils = (function () {
         });
     }
 
-    function sendMessageToAllTabs(body) {
-        chrome.tabs.query({}, function (tabs) {
-            for (let i = 0; i < tabs.length; ++i) {
-                chrome.tabs.sendMessage(tabs[i].id, body);
-            }
-        });
-    }
-
     function sendGlobalMessage(body, cb) {
         chrome.runtime.sendMessage(body, cb);
     }
 
     return {
         sendMessageToCurrentTab,
-        sendMessageToAllTabs,
         sendGlobalMessage,
     }
 })();
@@ -49,5 +40,16 @@ const storeUtils = (function () {
     }
 })();
 
+function generateOptions(optionsObj = {}) {
+    let delay = optionsObj.delay
+    let elementSelector = optionsObj.elementSelector || defaultSelector
 
+    if (!delay || Number.isNaN(+delay)) {
+        delay = defaultDelay
+    }
 
+    return {
+        delay,
+        elementSelector
+    }
+}

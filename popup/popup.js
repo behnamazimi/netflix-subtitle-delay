@@ -1,6 +1,6 @@
 'use strict';
 
-const {sendMessageToCurrentTab, sendGlobalMessage} = messagingUtils;
+const {sendGlobalMessage} = messagingUtils;
 
 let saveBtn = document.getElementById('save-btn');
 let delayInput = document.getElementById("delay")
@@ -14,10 +14,6 @@ getActiveTabInfo(() => {
 saveBtn.onclick = function () {
   let delay = delayInput.value
   let elementSelector = selectorInput.value
-
-  if (!+delay) delay = defaultDelay
-
-  if (!elementSelector) elementSelector = defaultSelector
 
   let options = {delay, elementSelector}
   sendGlobalMessage({action: globalActions.SET_OPTIONS, options}, () => {

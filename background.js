@@ -1,9 +1,20 @@
 'use strict';
 
+try {
+  importScripts("shared/constant.js", "shared/utils.js");
+} catch (e) {
+  console.log(e);
+}
+
 chrome.runtime.onMessage.addListener(handleMessages)
 
 chrome.tabs.onActivated.addListener(handleTabActivation);
 chrome.tabs.onUpdated.addListener(handleTabUpdate);
+
+chrome.runtime.onInstalled.addListener(() => {
+  // store initial options
+  storeUtils.storeOptions(generateOptions());
+});
 
 function handleMessages(data, details, sendResponse) {
   switch (data.action) {
@@ -14,12 +25,13 @@ function handleMessages(data, details, sendResponse) {
       })
       return true;
     case globalActions.SET_OPTIONS:
-      storeUtils.storeOptions(data.options);
+      const options = generateOptions(data.options);
+      storeUtils.storeOptions(options);
       messagingUtils.sendMessageToCurrentTab({
         action: globalActions.OPTIONS_UPDATE,
-        options: data.options
-      })
-      sendResponse(true)
+        options
+      });
+      sendResponse(true);
       return true;
   }
 
@@ -40,7 +52,9 @@ function handleTabUpdate(tabId, {status}) {
 function updateExtStatusInTab(tabId, url) {
   if (!tabId) return;
 
-  const isAllowed = !!url && (~url.indexOf("https://netflix.com") || ~url.indexOf("https://www.netflix.com"))
+  const netflixRegEx = /https:\/\/(www.)?netflix\.com.*/gm
+  const isAllowed = !!url && netflixRegEx.test(url)
+
   let iconPath = {
     "16": `icons/${isAllowed ? "" : "d_"}16x16.png`,
     "32": `icons/${isAllowed ? "" : "d_"}32x32.png`,
@@ -48,14 +62,12 @@ function updateExtStatusInTab(tabId, url) {
     "128": `icons/${isAllowed ? "" : "d_"}128x128.png`
   }
 
+  chrome.action.disable(tabId);
+
   if (isAllowed) {
-    chrome.browserAction.enable(tabId);
-  } else {
-    setTimeout(() => {
-      chrome.browserAction.disable(tabId);
-    }, 10)
+    chrome.action.enable(tabId);
   }
 
   // update icon
-  chrome.browserAction.setIcon({tabId: tabId, path: iconPath});
+  chrome.action.setIcon({tabId: tabId, path: iconPath});
 }

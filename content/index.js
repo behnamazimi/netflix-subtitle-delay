@@ -19,7 +19,7 @@ const orgElmObserver = new MutationObserver((mutationsList) => {
 
 function init() {
   sendGlobalMessage({action: globalActions.INIT}, (res) => {
-    options = generateOptions(res.options)
+    options = res.options
     startObservation();
   })
 }
@@ -28,6 +28,7 @@ function startObservation() {
 
   let checkCount = 0
   const lookingToastMsg = showToast("Looking for subtitle stuff in the code...", 0)
+
   // find original subtitle element on the document
   // and clone it within its parent
   // and start observe
@@ -56,7 +57,7 @@ function startObservation() {
     // in the case of not finding the subtitle element
     if (checkCount > 5) {
       clearInterval(checkInterval)
-      sendGlobalMessage({action: globalActions.SET_OPTIONS, options: generateOptions()})
+      sendGlobalMessage({action: globalActions.SET_OPTIONS})
       lookingToastMsg.remove()
       showToast("Could not find the target subtitle element in the Netflix codes alter 10 seconds .", 5000)
     }
@@ -70,17 +71,10 @@ function updateDelayedSubtitle(newInner) {
   }, delay);
 }
 
-function handleMessages(data, details) {
+function handleMessages(data) {
   if (data.action === globalActions.OPTIONS_UPDATE) {
-    options = generateOptions(data.options)
+    options = data.options
     showToast("Delay time updated.")
-  }
-}
-
-function generateOptions(optionsObj = {}) {
-  return {
-    delay: optionsObj.delay || defaultDelay,
-    elementSelector: optionsObj.elementSelector || defaultSelector,
   }
 }
 
