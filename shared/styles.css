@@ -1,0 +1,162 @@
+body {
+    --dnst-color-main: #000d1c;
+    --dnst-color-main-light: #00356e;
+    --dnst-color-main-dark: #000000;
+    --dnst-color-text: #d5d5d5;
+    --dnst-color-text-light: #fff;
+    --dnst-color-text-dark: #afafaf;
+    --dnst-color-success: #054978;
+    --dnst-color-success-light: #06568c;
+    --dnst-color-success-dark: #043b60;
+}
+
+.dnst *:not(pre):not(code) {
+    box-sizing: border-box;
+    font-family: 'Roboto', Arial, sans-serif !important;
+}
+
+body.dnst {
+    margin: 0 auto;
+    max-width: 768px;
+    font-size: 16px;
+    color: var(--dnst-color-text);
+    cursor: default;
+    background: var(--dnst-color-main);
+    user-select: none;
+    overflow-y: scroll;
+}
+
+body.dnst.docs {
+    line-height: 24px;
+}
+
+body.dnst a,
+body .dnst a {
+    color: var(--dnst-color-text);
+}
+
+.dnst a:hover {
+    color: var(--dnst-color-text-light);
+}
+
+.dnst .page {
+    padding: 2rem 1rem;
+}
+
+.dnst .page .page-head {
+    position: relative;
+}
+
+.dnst .page .brand {
+    text-align: center;
+    font-weight: bold;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+    margin-bottom: 1rem;
+}
+
+.dnst small {
+    all: inherit;
+    font-size: 14px;
+    opacity: 0.5;
+    font-weight: lighter;
+    display: inline-block;
+    margin-bottom: 0.25rem;
+    color: var(--dnst-color-text);
+}
+
+.dnst label {
+    width: 100%;
+    margin-bottom: 0.4rem;
+    display: inline-block;
+}
+
+.dnst textarea,
+.dnst input[type="search"],
+.dnst input[type="number"],
+.dnst input[type="text"] {
+    display: block;
+    box-sizing: border-box;
+    padding: 0.5rem;
+    background: #84848461;
+    border: none;
+    border-radius: 5px;
+    color: var(--dnst-color-text);
+    max-width: 100%;
+}
+
+.dnst textarea::placeholder,
+.dnst input::placeholder {
+    color: var(--dnst-color-text-dark);
+}
+
+.dnst textarea:focus,
+.dnst input[type="search"]:focus,
+.dnst input[type="number"]:focus,
+.dnst input[type="text"]:focus {
+    outline: none;
+    box-shadow: 0 0 1px 1px #ffffff94;
+    color: var(--dnst-color-text-light);
+}
+
+.dnst button {
+    all: initial;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    min-width: 50px;
+    display: inline-block;
+    padding: 5px 16px;
+    line-height: 24px;
+    white-space: nowrap;
+    vertical-align: middle;
+    border-radius: 6px;
+    color: var(--dnst-color-text-light);
+    background-color: var(--dnst-color-success);
+    user-select: none;
+    appearance: none;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+}
+
+.dnst button:not(:disabled):hover {
+    cursor: pointer;
+    background-color: var(--dnst-color-success-dark);
+}
+
+.dnst button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.dnst button.cancel {
+    background: transparent;
+    color: var(--dnst-color-text);
+    margin-right: 8px;
+}
+
+.dnst button.cancel:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dnst button.outline {
+    background: transparent;
+    color: var(--dnst-color-text);
+    border: 1px solid var(--dnst-color-text);
+}
+
+.dnst button.outline:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.dnst-toast {
+    position: fixed;
+    left: 1rem;
+    bottom: 1rem;
+    font-size: 14px;
+    padding: .5rem 1rem;
+    max-width: calc(100% - 2rem);
+    width: auto;
+    background-color: #000;
+}

@@ -1,0 +1,59 @@
+{
+  "name": "Netflix Subtitle Delay",
+  "version": "1.0",
+  "description": "A mini tool to add delay on the Netflix subtitles.",
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage"
+  ],
+  "background": {
+    "matches": [
+      "https://netflix.com/*",
+      "https://www.netflix.com/*"
+    ],
+    "scripts": [
+      "shared/constant.js",
+      "shared/utils.js",
+      "background/main.js"
+    ],
+    "persistent": false
+  },
+  "browser_action": {
+    "matches": [
+      "https://netflix.com/*",
+      "https://www.netflix.com/*"
+    ],
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/16x16.png",
+      "32": "icons/32x32.png",
+      "48": "icons/48x48.png",
+      "128": "icons/128x128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": [
+        "https://netflix.com/*",
+        "https://www.netflix.com/*"
+      ],
+      "js": [
+        "shared/constant.js",
+        "shared/utils.js",
+        "content/index.js"
+      ],
+      "css": [
+        "shared/styles.css"
+      ]
+    }
+  ],
+  "icons": {
+    "16": "icons/16x16.png",
+    "32": "icons/32x32.png",
+    "48": "icons/48x48.png",
+    "128": "icons/128x128.png"
+  },
+  "manifest_version": 2
+}
