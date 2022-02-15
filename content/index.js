@@ -12,7 +12,7 @@ let delayedSubtitleElm = null;
 const orgElmObserver = new MutationObserver((mutationsList) => {
   for (const mutation of mutationsList) {
     if (mutation.type === "childList") {
-      updateDelayedSubtitle(mutation.target.innerHTML)
+      updateDelayedSubtitle(mutation.target)
     }
   }
 })
@@ -42,7 +42,7 @@ function startObservation() {
       }
       delayedSubtitleElm.classList.add("delayed")
       subtitleElm.parentNode.insertBefore(delayedSubtitleElm, subtitleElm)
-      orgElmObserver.observe(subtitleElm, {childList: true, subtree: true});
+      orgElmObserver.observe(subtitleElm, {attributes: true, childList: true, subtree: true});
 
       // add style to hide original styles
       let style = document.createElement("style")
@@ -64,10 +64,11 @@ function startObservation() {
   }, 2000)
 }
 
-function updateDelayedSubtitle(newInner) {
+function updateDelayedSubtitle(updatedTarget) {
   const delay = (+options.delay * 1000) || 0
   setTimeout(() => {
-    delayedSubtitleElm.innerHTML = newInner;
+    delayedSubtitleElm.setAttribute("style", updatedTarget.getAttribute("style"))
+    delayedSubtitleElm.innerHTML = updatedTarget.innerHTML;
   }, delay);
 }
 
