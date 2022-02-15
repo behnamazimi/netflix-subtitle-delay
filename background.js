@@ -31,6 +31,7 @@ function handleMessages(data, details, sendResponse) {
         action: globalActions.OPTIONS_UPDATE,
         options
       });
+      chrome.action.setBadgeText({text: generateBadgeText(options.delay)});
       sendResponse(true);
       return true;
   }
@@ -63,9 +64,14 @@ function updateExtStatusInTab(tabId, url) {
   }
 
   chrome.action.disable(tabId);
+  chrome.action.setBadgeText({text: ""});
+  chrome.action.setBadgeBackgroundColor({color: '#361e6b'});
 
   if (isAllowed) {
     chrome.action.enable(tabId);
+    storeUtils.loadOptions(({options = {}}) => {
+      chrome.action.setBadgeText({text: generateBadgeText(options.delay)});
+    })
   }
 
   // update icon
