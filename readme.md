@@ -2,6 +2,8 @@
 
 Mini tool to delay subtitles on the Netflix official website.
 
+**[Chrome Web Store](https://chrome.google.com/webstore/detail/netflix-subtitle-delay/jlfdecbacdnabiopdhgbjmgggabhjoce)**
+
 As you may know, Netflix doesn't have this functionality by default, and sometimes being able to delay subtitle
 streaming can be of great help, especially when you're trying to learn a new language.
 
