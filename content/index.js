@@ -99,3 +99,13 @@ function showToast(msg, hideDelay = 3000) {
   }, hideDelay)
 }
 
+// start subtitle observation on url change
+let lastUrl = location.href;
+new MutationObserver(() => {
+  const url = location.href;
+  if (url !== lastUrl) {
+    lastUrl = url;
+    startObservation()
+  }
+}).observe(document, {childList: true, subtree: true});
+
