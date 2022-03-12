@@ -42,7 +42,7 @@ function startObservation() {
       }
       delayedSubtitleElm.classList.add("delayed")
       subtitleElm.parentNode.insertBefore(delayedSubtitleElm, subtitleElm)
-      orgElmObserver.observe(subtitleElm, {attributes: true, childList: true, subtree: true});
+      orgElmObserver.observe(subtitleElm, {attributes: false, childList: true, subtree: true});
 
       // add style to hide original styles
       let style = document.createElement("style")
@@ -66,9 +66,12 @@ function startObservation() {
 
 function updateDelayedSubtitle(updatedTarget) {
   const delay = (+options.delay * 1000) || 0
+
+  const nextContent = updatedTarget.innerHTML
+  const nextStyles = updatedTarget.getAttribute("style")
   setTimeout(() => {
-    delayedSubtitleElm.setAttribute("style", updatedTarget.getAttribute("style"))
-    delayedSubtitleElm.innerHTML = updatedTarget.innerHTML;
+    delayedSubtitleElm.setAttribute("style", nextStyles)
+    delayedSubtitleElm.innerHTML = nextContent;
   }, delay);
 }
 
