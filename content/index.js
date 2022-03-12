@@ -42,7 +42,7 @@ function startObservation() {
       }
       delayedSubtitleElm.classList.add("delayed")
       subtitleElm.parentNode.insertBefore(delayedSubtitleElm, subtitleElm)
-      orgElmObserver.observe(subtitleElm, {attributes: false, childList: true, subtree: true});
+      orgElmObserver.observe(subtitleElm, {attributes: true, childList: true, subtree: true});
 
       // add style to hide original styles
       let style = document.createElement("style")

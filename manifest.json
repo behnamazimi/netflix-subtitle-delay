@@ -1,6 +1,6 @@
 {
   "name": "Netflix Subtitle Delay",
-  "version": "1.3",
+  "version": "1.4",
   "description": "Mini tool to delay the Netflix subtitles",
   "permissions": [
     "tabs",
