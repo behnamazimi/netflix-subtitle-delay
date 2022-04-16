@@ -32,7 +32,7 @@ function startObservation() {
   // find original subtitle element on the document
   // and clone it within its parent
   // and start observe
-  let checkInterval = setInterval(() => {
+  let checkElementInterval = setInterval(() => {
     checkCount++;
     subtitleElm = document.querySelector(options.elementSelector)
     if (subtitleElm) {
@@ -49,15 +49,14 @@ function startObservation() {
       style.innerText = `body ${options.elementSelector} *{display:none!important;text-shadow:none!important;color:transparent!important}`
       document.head.appendChild(style)
 
-      clearInterval(checkInterval)
+      clearInterval(checkElementInterval)
       showToast("Delay applied :)")
       lookingToastMsg.remove()
     }
 
     // in the case of not finding the subtitle element
     if (checkCount > 5) {
-      clearInterval(checkInterval)
-      sendGlobalMessage({action: globalActions.SET_OPTIONS})
+      clearInterval(checkElementInterval)
       lookingToastMsg.remove()
       showToast("Could not find the target subtitle element in the Netflix codes alter 10 seconds .", 5000)
     }
