@@ -65,7 +65,7 @@ function updateExtStatusInTab(tabId, url) {
 
   chrome.action.disable(tabId);
   chrome.action.setBadgeText({text: ""});
-  chrome.action.setBadgeBackgroundColor({color: '#361e6b'});
+  chrome.action.setBadgeBackgroundColor({color: '#6448a9'});
 
   if (isAllowed) {
     chrome.action.enable(tabId);
