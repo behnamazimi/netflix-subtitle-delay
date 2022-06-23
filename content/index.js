@@ -2,6 +2,7 @@
 
 chrome.runtime.onMessage.addListener(handleMessages)
 document.addEventListener("DOMContentLoaded", init)
+document.addEventListener("keyup", handleKeyup)
 
 const {sendGlobalMessage} = messagingUtils;
 
@@ -27,7 +28,7 @@ function init() {
 function startObservation() {
 
   let checkCount = 0
-  const lookingToastMsg = showToast("Looking for subtitle stuff in the code...", 0)
+  showToast("Looking for subtitle stuff in the code...", 0)
 
   // find original subtitle element on the document
   // and clone it within its parent
@@ -50,14 +51,16 @@ function startObservation() {
       document.head.appendChild(style)
 
       clearInterval(checkElementInterval)
-      showToast("Delay applied :)")
-      lookingToastMsg.remove()
+      if (!!+options.delay) {
+        showToast(`${options.delay}s of subtitle delay applied!`)
+      } else {
+        showToast("Delay functionality added :)")
+      }
     }
 
     // in the case of not finding the subtitle element
     if (checkCount > 5) {
       clearInterval(checkElementInterval)
-      lookingToastMsg.remove()
       showToast("Could not find the target subtitle element in the Netflix codes alter 10 seconds .", 5000)
     }
   }, 2000)
@@ -77,14 +80,46 @@ function updateDelayedSubtitle(updatedTarget) {
 function handleMessages(data) {
   if (data.action === globalActions.OPTIONS_UPDATE) {
     options = data.options
-    showToast("Delay time updated.")
+    if (!+options.delay) {
+      showToast(`No subtitle delay!`)
+    } else {
+      showToast(`${options.delay}s of subtitle delay applied!`)
+    }
+  }
+}
+
+function handleKeyup(e) {
+  const tagName = e.path && e.path[0].tagName;
+  if (tagName && ["input", "textarea"].includes(tagName.toLowerCase())) {
+    return;
+  }
+
+  let updatedDelay = null
+  if (e.key === "a") {
+    updatedDelay = +options.delay - 0.2
+  } else if (e.key === "d") {
+    updatedDelay = +options.delay + 0.2
+  }
+
+  if (updatedDelay !== null) {
+    sendGlobalMessage({
+      action: globalActions.SET_OPTIONS,
+      options: {
+        delay: Math.min(5, Math.max(0, updatedDelay.toFixed(1)))
+      }
+    })
   }
 }
 
 function showToast(msg, hideDelay = 3000) {
   if (!msg) return
-  let msgElm = document.createElement("div")
-  msgElm.classList.add("dnst-toast")
+
+  let msgElm = document.getElementById("dnst-toast")
+  if (!msgElm) {
+    msgElm = document.createElement("div")
+    msgElm.setAttribute("id", "dnst-toast")
+    msgElm.classList.add("dnst-toast")
+  }
   msgElm.innerText = msg
   document.body.appendChild(msgElm)
 

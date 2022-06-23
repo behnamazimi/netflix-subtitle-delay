@@ -61,7 +61,7 @@ body .dnst a {
     opacity: 0.5;
     font-weight: lighter;
     display: inline-block;
-    margin-bottom: 0.25rem;
+    margin-top: 0.25rem;
     color: var(--dnst-color-text);
 }
 

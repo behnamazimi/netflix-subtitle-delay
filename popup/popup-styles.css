@@ -89,3 +89,23 @@ body.dnst {
     display: block;
     box-sizing: border-box;
 }
+
+.popup .tip {
+    margin-top: 16px
+}
+
+.popup .tip small {
+    margin-top: 6px;
+    display: block;
+    opacity: 1;
+}
+
+.popup .tip small span{
+    display: inline-flex;
+    border-radius: 4px;
+    background-color: var(--dnst-color-success);
+    width: 20px;
+    height: 20px;
+    justify-content: center;
+    align-items: center;
+}
