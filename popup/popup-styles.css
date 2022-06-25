@@ -74,6 +74,7 @@ body.dnst {
 
 .popup .options input {
     width: 100%;
+    margin-top: 6px;
 }
 
 .popup .options > *:not(:last-child) {
