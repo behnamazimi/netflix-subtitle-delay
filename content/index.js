@@ -9,6 +9,7 @@ const {sendGlobalMessage} = messagingUtils;
 let options = null;
 let subtitleElm = null;
 let delayedSubtitleElm = null;
+let toastVisibilityInterval = null;
 
 const orgElmObserver = new MutationObserver((mutationsList) => {
   for (const mutation of mutationsList) {
@@ -28,7 +29,7 @@ function init() {
 function startObservation() {
 
   let checkCount = 0
-  showToast("Looking for subtitle stuff in the code...", 0)
+  showToast("Looking for the subtitle mechanism...", 0)
 
   // find original subtitle element on the document
   // and clone it within its parent
@@ -52,7 +53,7 @@ function startObservation() {
 
       clearInterval(checkElementInterval)
       if (!!+options.delay) {
-        showToast(`${options.delay}s of subtitle delay applied!`)
+        showToast(`Subtitle delay set as ${options.delay} sec !`)
       } else {
         showToast("Delay functionality added :)")
       }
@@ -61,7 +62,7 @@ function startObservation() {
     // in the case of not finding the subtitle element
     if (checkCount > 5) {
       clearInterval(checkElementInterval)
-      showToast("Could not find the target subtitle element in the Netflix codes alter 10 seconds .", 5000)
+      showToast("Could not find the subtitle mechanism!", 5000)
     }
   }, 2000)
 }
@@ -83,7 +84,7 @@ function handleMessages(data) {
     if (!+options.delay) {
       showToast(`No subtitle delay!`)
     } else {
-      showToast(`${options.delay}s of subtitle delay applied!`)
+      showToast(`Subtitle delay set as ${options.delay} sec !`)
     }
   }
 }
@@ -127,7 +128,11 @@ function showToast(msg, hideDelay = 3000) {
     return msgElm
   }
 
-  setTimeout(() => {
+  if (toastVisibilityInterval) {
+    clearTimeout(toastVisibilityInterval)
+  }
+
+  toastVisibilityInterval = setTimeout(() => {
     msgElm.remove()
     msgElm = null
   }, hideDelay)

@@ -4,7 +4,7 @@ const {sendGlobalMessage} = messagingUtils;
 
 let saveBtn = document.getElementById('save-btn');
 let delayInput = document.getElementById("delay")
-let selectorInput = document.getElementById("elementSelector")
+// let selectorInput = document.getElementById("elementSelector")
 
 // find active tab and init popup
 getActiveTabInfo(() => {
@@ -13,9 +13,9 @@ getActiveTabInfo(() => {
 
 saveBtn.onclick = function () {
   let delay = delayInput.value
-  let elementSelector = selectorInput.value
+  // let elementSelector = selectorInput.value
 
-  let options = {delay, elementSelector}
+  let options = {delay}
   sendGlobalMessage({action: globalActions.SET_OPTIONS, options}, () => {
     window.close()
   })
@@ -24,7 +24,7 @@ saveBtn.onclick = function () {
 function initPopup() {
   sendGlobalMessage({action: globalActions.POPUP_INIT}, ({options = {}}) => {
     delayInput.value = options.delay || defaultDelay
-    selectorInput.value = options.elementSelector || defaultSelector
+    // selectorInput.value = options.elementSelector || defaultSelector
   });
 }
 
